@@ -19,6 +19,7 @@ public class AllocationRequest {
     @Column(name = "id")
     private Long id;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "status")
     private Status status;
 
@@ -42,7 +43,7 @@ public class AllocationRequest {
     @Column(name = "last_updated_at")
     private LocalDateTime lastUpdatedAt;
 
-    enum Status {
+    public enum Status {
         stand_by, allocated // todo 나중에 운행 완료, 취소 등 추가 가능
     }
 
