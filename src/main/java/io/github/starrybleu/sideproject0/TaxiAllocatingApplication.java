@@ -1,4 +1,4 @@
-package io.github.starrybleu.sideprject0;
+package io.github.starrybleu.sideproject0;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

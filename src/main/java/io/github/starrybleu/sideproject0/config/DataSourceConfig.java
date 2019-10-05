@@ -1,4 +1,4 @@
-package io.github.starrybleu.sideprject0.config;
+package io.github.starrybleu.sideproject0.config;
 
 import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.boot.context.properties.ConfigurationProperties;

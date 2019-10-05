@@ -1,4 +1,4 @@
-package io.github.starrybleu.sideprject0.config;
+package io.github.starrybleu.sideproject0.config;
 
 import org.hibernate.dialect.Dialect;
 import org.hibernate.dialect.identity.IdentityColumnSupport;

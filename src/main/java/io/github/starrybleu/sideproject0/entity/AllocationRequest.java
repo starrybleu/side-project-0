@@ -1,4 +1,4 @@
-package io.github.starrybleu.sideprject0.entity;
+package io.github.starrybleu.sideproject0.entity;
 
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;

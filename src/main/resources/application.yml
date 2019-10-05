@@ -9,4 +9,4 @@ spring:
     hibernate:
       ddl-auto: create # validate
     show-sql: true
-    database-platform: io.github.starrybleu.sideprject0.config.SQLiteDialect
+    database-platform: io.github.starrybleu.sideproject0.config.SQLiteDialect
