@@ -34,14 +34,30 @@ public class AllocationRequestController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "X-AUTH-TOKEN", required = true, dataType = "String", paramType = "header")
     })
+    @GetMapping(value = "/api/allocation-requests/mine",
+            consumes = MediaType.ALL_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public Page<AllocationRequestPayload> getAllocationRequestsForPassenger(@AuthenticationPrincipal AuthenticatedUser user,
+                                                                         @PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
+        if (!user.isPassenger()) {
+            throw new ForbiddenException("Only passenger can read list of own requests.");
+        }
+        return service.getMyAllocationRequests(user.getId(), pageable)
+                .map(AllocationRequestPayload::from);
+    }
+
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "X-AUTH-TOKEN", required = true, dataType = "String", paramType = "header")
+    })
     @GetMapping(value = "/api/allocation-requests",
             consumes = MediaType.ALL_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public Page<AllocationRequestPayload> getAllocationRequests(@AuthenticationPrincipal AuthenticatedUser user,
-                                                                @PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
-        // todo 기사용, 승객용 endpoint 분리
-        log.info("user.isPassenger() : {}", user.isPassenger());
-        return service.getAllocationRequests(pageable)
+    public Page<AllocationRequestPayload> getAllocationRequestsForDriver(@AuthenticationPrincipal AuthenticatedUser user,
+                                                                         @PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
+        if (!user.isDriver()) {
+            throw new ForbiddenException("Only authorized driver can read list of requests.");
+        }
+        return service.getMyAllocationRequests(pageable)
                 .map(AllocationRequestPayload::from);
     }
 

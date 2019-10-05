@@ -7,6 +7,7 @@ import io.github.starrybleu.sideproject0.entity.repository.AllocationRequestRepo
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,7 +24,7 @@ public class AllocationRequestService {
     }
 
     @Transactional(readOnly = true)
-    public Page<AllocationRequest> getAllocationRequests(Pageable pageable) {
+    public Page<AllocationRequest> getMyAllocationRequests(Pageable pageable) {
         return repository.findAll(pageable);
     }
 
@@ -41,4 +42,8 @@ public class AllocationRequestService {
         return repository.save(entity);
     }
 
+    public Page<AllocationRequest> getMyAllocationRequests(Integer userId, Pageable pageable) {
+        Specification<AllocationRequest> spec = (root, query, cb) -> cb.equal(root.get("id"), userId);
+        return repository.findAll(spec, pageable);
+    }
 }
