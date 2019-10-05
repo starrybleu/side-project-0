@@ -1,12 +1,18 @@
+#sqlite:
+#  store-path: /home/terrylee/IdeaProjects/side-project-0
 spring:
   datasource:
     hikari:
-      jdbc-url: jdbc:sqlite:memory:myDb?cache=shared
+      jdbc-url: jdbc:sqlite:/home/terrylee/IdeaProjects/side-project-0/database.db
       driver-class-name: org.sqlite.JDBC
       username: sa
       password: sa
   jpa:
-    hibernate:
-      ddl-auto: update # validate
     show-sql: true
     database-platform: io.github.starrybleu.sideproject0.config.SQLiteDialect
+#    generate-ddl: true
+#    hibernate:
+#      ddl-auto: create-drop
+jwt:
+  secret: $sf3idnm%21dB&c@
+  expires-after-creation-in-millis: 50400000 # 14 days

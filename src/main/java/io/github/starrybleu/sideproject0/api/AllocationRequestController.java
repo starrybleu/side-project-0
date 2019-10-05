@@ -30,6 +30,8 @@ public class AllocationRequestController {
             consumes = MediaType.ALL_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public Page<AllocationRequestPayload> getAllocationRequests(@PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
+        // todo 기사만 모두 조회
+        // todo 승객은 본인 것만(검색)
         return service.getAllocationRequests(pageable)
                 .map(AllocationRequestPayload::from);
     }
