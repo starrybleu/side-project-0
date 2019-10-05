@@ -5,7 +5,7 @@ import io.github.starrybleu.sideproject0.api.UserSignInReqBody;
 import io.github.starrybleu.sideproject0.api.exception.BadUserAccessException;
 import io.github.starrybleu.sideproject0.api.exception.UserDuplicateException;
 import io.github.starrybleu.sideproject0.auth.JwtTokenProvider;
-import io.github.starrybleu.sideproject0.entity.User;
+import io.github.starrybleu.sideproject0.entity.ApiUser;
 import io.github.starrybleu.sideproject0.entity.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -34,15 +34,15 @@ public class UserService {
     }
 
     @Transactional
-    public User createUser(UserCreateReqBody reqBody) {
-        Optional<User> existingUser = repository.findByEmail(reqBody.getEmail());
+    public ApiUser createUser(UserCreateReqBody reqBody) {
+        Optional<ApiUser> existingUser = repository.findByEmail(reqBody.getEmail());
 
         if (existingUser.isPresent()) {
             throw new UserDuplicateException(String.format("The given email(%s) had already signed up.", reqBody.getEmail()));
         }
 
-        User createdUser = User.create(reqBody, passwordEncoder.encode(reqBody.getPassword()));
-        return repository.save(createdUser);
+        ApiUser createdApiUser = ApiUser.create(reqBody, passwordEncoder.encode(reqBody.getPassword()));
+        return repository.save(createdApiUser);
     }
 
     @Transactional

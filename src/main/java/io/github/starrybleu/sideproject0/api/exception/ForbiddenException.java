@@ -6,9 +6,10 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 @Slf4j
 @ResponseStatus(HttpStatus.FORBIDDEN)
-public class BadUserAccessException extends RuntimeException {
-    public BadUserAccessException(String email) {
-        super(String.format("Provided password for %s doesn't match.", email));
+public class ForbiddenException extends RuntimeException {
+
+    public ForbiddenException(String message) {
+        super(message);
         log.warn("", this);
     }
 }

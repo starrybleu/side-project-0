@@ -1,6 +1,6 @@
 package io.github.starrybleu.sideproject0.api;
 
-import io.github.starrybleu.sideproject0.entity.User;
+import io.github.starrybleu.sideproject0.entity.ApiUser;
 import lombok.Data;
 import lombok.ToString;
 
@@ -19,5 +19,5 @@ public class UserCreateReqBody {
     String password;
 
     @NotNull
-    User.UserType userType;
+    ApiUser.UserType userType;
 }

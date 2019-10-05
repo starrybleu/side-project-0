@@ -1,15 +1,15 @@
 package io.github.starrybleu.sideproject0.api;
 
-import io.github.starrybleu.sideproject0.entity.User;
+import io.github.starrybleu.sideproject0.entity.ApiUser;
 import lombok.Data;
 
 @Data
 public class UserPayload {
     Integer id;
     String email;
-    User.UserType userType;
+    ApiUser.UserType userType;
 
-    public static UserPayload from(User entity) {
+    public static UserPayload from(ApiUser entity) {
         UserPayload payload = new UserPayload();
         payload.id = entity.getId();
         payload.email = entity.getEmail();

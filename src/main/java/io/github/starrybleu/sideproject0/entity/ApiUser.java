@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "user")
 @EntityListeners(AuditingEntityListener.class)
-public class User {
+public class ApiUser {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,11 +38,11 @@ public class User {
     @Column(name = "last_updated_at")
     private LocalDateTime lastUpdatedAt;
 
-    User() {
+    ApiUser() {
     }
 
-    public static User create(UserCreateReqBody reqBody, String encodedPassword) {
-        User entity = new User();
+    public static ApiUser create(UserCreateReqBody reqBody, String encodedPassword) {
+        ApiUser entity = new ApiUser();
         entity.email = reqBody.getEmail();
         entity.password = encodedPassword;
         entity.userType = reqBody.getUserType();

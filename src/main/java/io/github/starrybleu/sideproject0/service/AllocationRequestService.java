@@ -1,6 +1,7 @@
 package io.github.starrybleu.sideproject0.service;
 
 import io.github.starrybleu.sideproject0.api.TakingAllocationRequestReqBody;
+import io.github.starrybleu.sideproject0.auth.AuthenticatedUser;
 import io.github.starrybleu.sideproject0.entity.AllocationRequest;
 import io.github.starrybleu.sideproject0.entity.repository.AllocationRequestRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -27,8 +28,8 @@ public class AllocationRequestService {
     }
 
     @Transactional
-    public AllocationRequest createAllocationRequest(Integer passengerNo, String address) {
-        AllocationRequest entity = AllocationRequest.create(passengerNo, address);
+    public AllocationRequest createAllocationRequest(AuthenticatedUser user, String address) {
+        AllocationRequest entity = AllocationRequest.create(user.getId(), address);
         return repository.save(entity);
     }
 

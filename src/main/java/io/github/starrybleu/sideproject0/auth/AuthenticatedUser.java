@@ -1,22 +1,35 @@
 package io.github.starrybleu.sideproject0.auth;
 
-import org.springframework.security.core.GrantedAuthority;
+import io.github.starrybleu.sideproject0.entity.ApiUser;
+import lombok.ToString;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
-import java.util.Collection;
 import java.util.Collections;
 
+@ToString(exclude = "password")
 public class AuthenticatedUser extends User {
 
-    public AuthenticatedUser(io.github.starrybleu.sideproject0.entity.User user) {
-        this(user.getEmail(),
-                user.getPassword(),
-                Collections.singleton(new SimpleGrantedAuthority(user.getUserType().name()))
+    private final ApiUser apiUser;
+
+    public AuthenticatedUser(ApiUser apiUser) {
+        super(apiUser.getEmail(),
+                apiUser.getPassword(),
+                Collections.singleton(new SimpleGrantedAuthority(apiUser.getUserType().name()))
         );
+        this.apiUser = apiUser;
     }
 
-    public AuthenticatedUser(String username, String password, Collection<? extends GrantedAuthority> authorities) {
-        super(username, password, authorities);
+
+    public boolean isPassenger() {
+        return apiUser.getUserType() == ApiUser.UserType.passenger;
+    }
+
+    public boolean isDriver() {
+        return apiUser.getUserType() == ApiUser.UserType.driver;
+    }
+
+    public Integer getId() {
+        return apiUser.getId();
     }
 }
