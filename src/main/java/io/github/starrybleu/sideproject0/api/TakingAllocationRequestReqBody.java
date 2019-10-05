@@ -4,5 +4,5 @@ import lombok.Data;
 
 @Data
 public class TakingAllocationRequestReqBody {
-    Long driverNo;
+    Integer driverNo;
 }

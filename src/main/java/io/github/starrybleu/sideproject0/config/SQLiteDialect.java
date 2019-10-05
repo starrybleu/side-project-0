@@ -12,7 +12,7 @@ public class SQLiteDialect extends Dialect {
         registerColumnType(Types.TINYINT, "tinyint");
         registerColumnType(Types.SMALLINT, "smallint");
         registerColumnType(Types.INTEGER, "integer");
-        registerColumnType(Types.BIGINT, "long");
+        registerColumnType(Types.BIGINT, "bigint");
     }
 
     @Override

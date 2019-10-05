@@ -11,14 +11,13 @@ public class SQLiteIdentityColumnSupport extends IdentityColumnSupportImpl {
     }
 
     @Override
-    public String getIdentitySelectString(String table, String column, int type)
-            throws MappingException {
+    public String getIdentitySelectString(String table, String column, int type) throws MappingException {
         return "select last_insert_rowid()";
     }
 
     @Override
     public String getIdentityColumnString(int type) throws MappingException {
-        return "long";
+        return "integer";
     }
 
 }

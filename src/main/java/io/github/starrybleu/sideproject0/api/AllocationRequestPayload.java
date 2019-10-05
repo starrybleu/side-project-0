@@ -7,18 +7,18 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 @Data
-public class AllocationRequestPayload {
-    Long id;
+class AllocationRequestPayload {
+    Integer id;
     AllocationRequest.Status status;
-    Long passengerNo;
+    Integer passengerNo;
     String address;
-    Long driverNo;
+    Integer driverNo;
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     LocalDateTime allocatedAt;
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     LocalDateTime createdAt;
 
-    public static AllocationRequestPayload from(AllocationRequest entity) {
+    static AllocationRequestPayload from(AllocationRequest entity) {
         AllocationRequestPayload payload = new AllocationRequestPayload();
         payload.id = entity.getId();
         payload.status = entity.getStatus();
