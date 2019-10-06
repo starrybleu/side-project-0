@@ -1,4 +1,4 @@
-package io.github.starrybleu.sideproject0.api;
+package io.github.starrybleu.sideproject0.api.response;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.github.starrybleu.sideproject0.entity.AllocationRequest;
@@ -7,7 +7,7 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 @Data
-class AllocationRequestPayload {
+public class AllocationRequestPayload {
     Integer id;
     AllocationRequest.Status status;
     Integer passengerNo;
@@ -18,7 +18,7 @@ class AllocationRequestPayload {
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     LocalDateTime createdAt;
 
-    static AllocationRequestPayload from(AllocationRequest entity) {
+    public static AllocationRequestPayload from(AllocationRequest entity) {
         AllocationRequestPayload payload = new AllocationRequestPayload();
         payload.id = entity.getId();
         payload.status = entity.getStatus();

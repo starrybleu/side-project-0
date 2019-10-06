@@ -1,7 +1,7 @@
 package io.github.starrybleu.sideproject0.service;
 
-import io.github.starrybleu.sideproject0.api.UserCreateReqBody;
-import io.github.starrybleu.sideproject0.api.UserSignInReqBody;
+import io.github.starrybleu.sideproject0.api.request.UserCreateReqBody;
+import io.github.starrybleu.sideproject0.api.request.UserSignInReqBody;
 import io.github.starrybleu.sideproject0.api.exception.BadUserAccessException;
 import io.github.starrybleu.sideproject0.api.exception.UserDuplicateException;
 import io.github.starrybleu.sideproject0.auth.JwtTokenProvider;

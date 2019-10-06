@@ -1,5 +1,8 @@
 package io.github.starrybleu.sideproject0.api;
 
+import io.github.starrybleu.sideproject0.api.request.UserCreateReqBody;
+import io.github.starrybleu.sideproject0.api.request.UserSignInReqBody;
+import io.github.starrybleu.sideproject0.api.response.UserPayload;
 import io.github.starrybleu.sideproject0.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
@@ -31,7 +34,7 @@ public class UserController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.TEXT_PLAIN_VALUE)
     public String signIn(@Valid @RequestBody UserSignInReqBody reqBody) {
-        log.info("signIn email: {}", reqBody.email);
+        log.info("signIn email: {}", reqBody.getEmail());
         return userService.authenticate(reqBody);
     }
 

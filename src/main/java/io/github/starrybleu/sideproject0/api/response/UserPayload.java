@@ -1,4 +1,4 @@
-package io.github.starrybleu.sideproject0.api;
+package io.github.starrybleu.sideproject0.api.response;
 
 import io.github.starrybleu.sideproject0.entity.ApiUser;
 import lombok.Data;

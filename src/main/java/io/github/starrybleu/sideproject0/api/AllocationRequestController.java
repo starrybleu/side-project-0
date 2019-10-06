@@ -1,6 +1,8 @@
 package io.github.starrybleu.sideproject0.api;
 
 import io.github.starrybleu.sideproject0.api.exception.ForbiddenException;
+import io.github.starrybleu.sideproject0.api.request.TakingAllocationRequestReqBody;
+import io.github.starrybleu.sideproject0.api.response.AllocationRequestPayload;
 import io.github.starrybleu.sideproject0.auth.AuthenticatedUser;
 import io.github.starrybleu.sideproject0.entity.AllocationRequest;
 import io.github.starrybleu.sideproject0.service.AllocationRequestService;
@@ -38,7 +40,7 @@ public class AllocationRequestController {
             consumes = MediaType.ALL_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public Page<AllocationRequestPayload> getAllocationRequestsForPassenger(@AuthenticationPrincipal AuthenticatedUser user,
-                                                                         @PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
+                                                                            @PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
         if (!user.isPassenger()) {
             throw new ForbiddenException("Only passenger can read list of own requests.");
         }
@@ -91,7 +93,7 @@ public class AllocationRequestController {
                                                 @PathVariable("arId") Integer arId,
                                                 @Valid @RequestBody TakingAllocationRequestReqBody reqBody) {
         log.info("takeRequest reqBody: {}, ", reqBody);
-        boolean isDriverIdMatch = reqBody.driverNo.equals(user.getId());
+        boolean isDriverIdMatch = reqBody.getDriverNo().equals(user.getId());
         if (!user.isDriver() || !isDriverIdMatch) {
             throw new ForbiddenException("Only authorized driver can take allocation request. user: " + user + ", match: " + isDriverIdMatch);
         }

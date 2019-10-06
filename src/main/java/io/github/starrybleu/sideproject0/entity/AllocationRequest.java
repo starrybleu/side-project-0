@@ -1,6 +1,6 @@
 package io.github.starrybleu.sideproject0.entity;
 
-import io.github.starrybleu.sideproject0.api.TakingAllocationRequestReqBody;
+import io.github.starrybleu.sideproject0.api.request.TakingAllocationRequestReqBody;
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;

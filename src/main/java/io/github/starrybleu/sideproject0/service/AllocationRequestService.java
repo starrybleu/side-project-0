@@ -1,6 +1,6 @@
 package io.github.starrybleu.sideproject0.service;
 
-import io.github.starrybleu.sideproject0.api.TakingAllocationRequestReqBody;
+import io.github.starrybleu.sideproject0.api.request.TakingAllocationRequestReqBody;
 import io.github.starrybleu.sideproject0.auth.AuthenticatedUser;
 import io.github.starrybleu.sideproject0.entity.AllocationRequest;
 import io.github.starrybleu.sideproject0.entity.repository.AllocationRequestRepository;
