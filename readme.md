@@ -7,9 +7,14 @@
 - lombok
 - swagger 2.9.x
 
+## API, Table 설계 문서
+
+- [링크](https://docs.google.com/spreadsheets/d/1nYKGqcqDfya_K0D7-TldyduZcnMxRBPldV4IIVHQsfQ/edit?usp=sharing)
+
 ## 실행 가이드
 
 ### 공통
+
 - jdk 1.8 설치 
 - `JAVA_HOME` 환경 변수를 jdk 가 설치된 디렉토리로 설정
 
