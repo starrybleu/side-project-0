@@ -8,6 +8,7 @@ import io.github.starrybleu.sideproject0.entity.AllocationRequest;
 import io.github.starrybleu.sideproject0.service.AllocationRequestService;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -33,6 +34,7 @@ public class AllocationRequestController {
         this.service = service;
     }
 
+    @ApiOperation(value = "승객 - 본인 요청 목록 조회", notes = "승객이 본인의 pagination 된 배차 요청 목록 조회")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "X-AUTH-TOKEN", required = true, dataType = "String", paramType = "header")
     })
@@ -48,6 +50,7 @@ public class AllocationRequestController {
                 .map(AllocationRequestPayload::from);
     }
 
+    @ApiOperation(value = "기사 - 모든 요청 목록 조회", notes = "기사가 모든 pagination 된 배차 요청 목록 조회")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "X-AUTH-TOKEN", required = true, dataType = "String", paramType = "header")
     })
@@ -63,6 +66,7 @@ public class AllocationRequestController {
                 .map(AllocationRequestPayload::from);
     }
 
+    @ApiOperation(value = "승객 - 배차 요청", notes = "승객이 원하는 주소로 배차 요청")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "X-AUTH-TOKEN", required = true, dataType = "String", paramType = "header")
     })
@@ -83,6 +87,7 @@ public class AllocationRequestController {
                 .body(AllocationRequestPayload.from(createdEntity));
     }
 
+    @ApiOperation(value = "기사 - 배차", notes = "기사가 지정한 '배차 요청'에 대한 점유")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "X-AUTH-TOKEN", required = true, dataType = "String", paramType = "header")
     })
