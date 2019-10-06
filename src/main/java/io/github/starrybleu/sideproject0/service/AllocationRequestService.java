@@ -25,7 +25,7 @@ public class AllocationRequestService {
     }
 
     @Transactional(readOnly = true)
-    public Page<AllocationRequest> getMyAllocationRequests(Pageable pageable) {
+    public Page<AllocationRequest> getAllocationRequests(Pageable pageable) {
         return repository.findAll(pageable);
     }
 
@@ -46,8 +46,9 @@ public class AllocationRequestService {
         return repository.save(entity);
     }
 
+    @Transactional(readOnly = true)
     public Page<AllocationRequest> getMyAllocationRequests(Integer userId, Pageable pageable) {
-        Specification<AllocationRequest> spec = (root, query, cb) -> cb.equal(root.get("id"), userId);
+        Specification<AllocationRequest> spec = (root, query, cb) -> cb.equal(root.get("passengerNo"), userId);
         return repository.findAll(spec, pageable);
     }
 }

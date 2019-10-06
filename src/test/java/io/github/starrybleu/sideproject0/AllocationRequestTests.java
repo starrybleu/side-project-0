@@ -98,7 +98,7 @@ public class AllocationRequestTests {
 
     @Test
     public void 인증된_기사가_전체_요청목록조회하면_전체배차요청목록을_받는다() throws Exception {
-        when(service.getMyAllocationRequests(any()))
+        when(service.getAllocationRequests(any()))
                 .thenReturn(new PageImpl<>(Collections.emptyList()));
         mvc.perform(get("/api/allocation-requests")
                 .header("X-AUTH-TOKEN", driverJwt))

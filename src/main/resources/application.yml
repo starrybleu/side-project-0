@@ -1,9 +1,10 @@
-#sqlite:
+sqlite:
 #  store-path: /home/terrylee/IdeaProjects/side-project-0
+  store-path: /mnt/c/Users/terrylee/IdeaProjects/side-project-0
 spring:
   datasource:
     hikari:
-      jdbc-url: jdbc:sqlite:/home/terrylee/IdeaProjects/side-project-0/database.db
+      jdbc-url: jdbc:sqlite:${sqlite.store-path}/database.db
       driver-class-name: org.sqlite.JDBC
       username: sa
       password: sa

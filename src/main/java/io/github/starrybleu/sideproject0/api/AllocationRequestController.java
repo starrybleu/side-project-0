@@ -62,7 +62,7 @@ public class AllocationRequestController {
         if (!user.isDriver()) {
             throw new ForbiddenException("Only authorized driver can read list of requests.");
         }
-        return service.getMyAllocationRequests(pageable)
+        return service.getAllocationRequests(pageable)
                 .map(AllocationRequestPayload::from);
     }
 
