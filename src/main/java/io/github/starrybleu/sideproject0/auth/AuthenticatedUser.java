@@ -12,7 +12,7 @@ public class AuthenticatedUser extends User {
 
     private final ApiUser apiUser;
 
-    AuthenticatedUser(ApiUser apiUser) {
+    public AuthenticatedUser(ApiUser apiUser) {
         super(apiUser.getEmail(),
                 apiUser.getPassword(),
                 Collections.singleton(new SimpleGrantedAuthority(apiUser.getUserType().name()))
