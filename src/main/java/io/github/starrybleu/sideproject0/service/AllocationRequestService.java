@@ -1,5 +1,6 @@
 package io.github.starrybleu.sideproject0.service;
 
+import io.github.starrybleu.sideproject0.api.exception.UnprocessableException;
 import io.github.starrybleu.sideproject0.api.request.TakingAllocationRequestReqBody;
 import io.github.starrybleu.sideproject0.auth.AuthenticatedUser;
 import io.github.starrybleu.sideproject0.entity.AllocationRequest;
@@ -38,6 +39,9 @@ public class AllocationRequestService {
     public AllocationRequest takeRequest(Integer arId, TakingAllocationRequestReqBody reqBody) {
         AllocationRequest entity = repository.findById(arId)
                 .orElseThrow(EntityNotFoundException::new);
+        if (entity.getDriverNo() != null) {
+            throw new UnprocessableException("The given allocation-request had already been taken");
+        }
         entity.takenRequestByDriver(reqBody);
         return repository.save(entity);
     }
