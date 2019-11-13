@@ -36,13 +36,13 @@ public class AllocationRequestService {
     }
 
     @Transactional
-    public AllocationRequest takeRequest(Integer arId, TakingAllocationRequestReqBody reqBody) {
+    public AllocationRequest takeRequest(Integer arId, Integer driverNo) {
         AllocationRequest entity = repository.findById(arId)
                 .orElseThrow(EntityNotFoundException::new);
         if (entity.getDriverNo() != null) {
             throw new UnprocessableException("The given allocation-request had already been taken");
         }
-        entity.takenRequestByDriver(reqBody);
+        entity.takenRequestByDriver(driverNo);
         return repository.save(entity);
     }
 

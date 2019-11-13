@@ -1,6 +1,7 @@
 sqlite:
 #  store-path: /home/terrylee/IdeaProjects/side-project-0
-  store-path: /mnt/c/Users/terrylee/IdeaProjects/side-project-0
+#  store-path: /mnt/c/Users/terrylee/IdeaProjects/side-project-0
+  store-path: C:\Users\terrylee\IdeaProjects\side-project-0
 spring:
   datasource:
     hikari:
@@ -16,4 +17,4 @@ spring:
 #      ddl-auto: create-drop
 jwt:
   secret: $sf3idnm%21dB&c@
-  expires-after-creation-in-millis: 50400000 # 14 days
+  expires-after-creation-in-millis: 50400000 # ~~14 days~~ : 14hours 임. 틀렸음

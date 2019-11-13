@@ -3,6 +3,7 @@ package io.github.starrybleu.sideproject0;
 import io.github.starrybleu.sideproject0.auth.JwtTokenProvider;
 import io.github.starrybleu.sideproject0.entity.AllocationRequest;
 import io.github.starrybleu.sideproject0.service.AllocationRequestService;
+import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -115,10 +116,33 @@ public class AllocationRequestTests {
     @Test
     public void 인증된_기사가_배차_요청을_하면_403_Forbidden_예외를_받는다() throws Exception {
         mvc.perform(post("/api/allocation-requests")
-                .content("서울 강남구")
+                .content("{\"address\": \"서울 강남구\"}")
                 .header("X-AUTH-TOKEN", driverJwt)
-                .header("content-type", MediaType.TEXT_PLAIN_VALUE))
+                .header("content-type", MediaType.APPLICATION_JSON_VALUE))
+                .andDo(print())
                 .andExpect(status().is(403))
+        ;
+    }
+
+    @Test
+    public void 길이가_100자가_넘는_주소가_요청되면_400_BadRequest_예외를_받는다() throws Exception {
+        AllocationRequest mockAllocationRequest = mock(AllocationRequest.class);
+        when(mockAllocationRequest.getId())
+                .thenReturn(1239);
+        when(service.createAllocationRequest(any(), any()))
+                .thenReturn(mockAllocationRequest);
+        StringBuilder longAddress = new StringBuilder();
+        for (int i = 0; i < 20; i += 1) {
+            longAddress.append("긴 주소 100자가 넘는 주소");
+        }
+
+        mvc.perform(post("/api/allocation-requests")
+                .content("{\"address\": \"" + longAddress.toString() + "\"}")
+                .header("X-AUTH-TOKEN", passengerJwt)
+                .header("content-type", MediaType.APPLICATION_JSON_VALUE))
+                .andDo(print())
+                .andExpect(status().is(400))
+                .andExpect(jsonPath("$.message").value(Matchers.containsString("size must be between 1 and 100")))
         ;
     }
 
@@ -131,9 +155,9 @@ public class AllocationRequestTests {
                 .thenReturn(mockAllocationRequest);
 
         mvc.perform(post("/api/allocation-requests")
-                .content("서울 강남구")
+                .content("{\"address\": \"서울 강남구\"}")
                 .header("X-AUTH-TOKEN", passengerJwt)
-                .header("content-type", MediaType.TEXT_PLAIN_VALUE))
+                .header("content-type", MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
                 .andExpect(status().is(201))
                 .andExpect(jsonPath("$.id").value(1239))
@@ -142,10 +166,10 @@ public class AllocationRequestTests {
 
     @Test
     public void 인증된_승객이_배차_요청을_점유하려하면_403_Forbidden_예외를_받는다() throws Exception {
-        mvc.perform(patch("/api/allocation-requests/1")
-                .content("{\"driverNo\": 9}")
+        mvc.perform(patch("/api/allocation-requests/1/take")
                 .header("X-AUTH-TOKEN", passengerJwt)
-                .header("content-type", MediaType.APPLICATION_JSON))
+                .header("content-type", MediaType.APPLICATION_JSON_VALUE))
+                .andDo(print())
                 .andExpect(status().is(403))
         ;
     }
@@ -158,22 +182,11 @@ public class AllocationRequestTests {
         when(service.takeRequest(any(), any()))
                 .thenReturn(mockAllocationRequest);
 
-        mvc.perform(patch("/api/allocation-requests/1")
-                .content("{\"driverNo\": 9}")
+        mvc.perform(patch("/api/allocation-requests/1/take")
                 .header("X-AUTH-TOKEN", driverJwt)
                 .header("content-type", MediaType.APPLICATION_JSON))
                 .andExpect(status().is(200))
                 .andExpect(jsonPath("$.id").value(1239))
-        ;
-    }
-
-    @Test
-    public void 인증된_기사가_다른_기사로_배차_요청을_점유시도하면_403_Forbidden_예외를_받는다() throws Exception {
-        mvc.perform(patch("/api/allocation-requests/1")
-                .content("{\"driverNo\": 111}")
-                .header("X-AUTH-TOKEN", driverJwt)
-                .header("content-type", MediaType.APPLICATION_JSON))
-                .andExpect(status().is(403))
         ;
     }
 

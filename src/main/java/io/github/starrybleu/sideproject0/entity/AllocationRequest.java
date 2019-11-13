@@ -55,9 +55,9 @@ public class AllocationRequest {
         return entity;
     }
 
-    public void takenRequestByDriver(TakingAllocationRequestReqBody reqBody) {
+    public void takenRequestByDriver(Integer driverNo) {
         this.status = Status.allocated;
-        this.driverNo = reqBody.getDriverNo();
+        this.driverNo = driverNo;
         this.allocatedAt = LocalDateTime.now();
     }
 

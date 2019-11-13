@@ -1,7 +1,7 @@
 package io.github.starrybleu.sideproject0.api;
 
 import io.github.starrybleu.sideproject0.api.exception.ForbiddenException;
-import io.github.starrybleu.sideproject0.api.request.TakingAllocationRequestReqBody;
+import io.github.starrybleu.sideproject0.api.request.CreateAllocationRequestReqBody;
 import io.github.starrybleu.sideproject0.api.response.AllocationRequestPayload;
 import io.github.starrybleu.sideproject0.auth.AuthenticatedUser;
 import io.github.starrybleu.sideproject0.entity.AllocationRequest;
@@ -20,8 +20,6 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import java.net.URI;
 
 @Slf4j
@@ -71,18 +69,15 @@ public class AllocationRequestController {
             @ApiImplicitParam(name = "X-AUTH-TOKEN", required = true, dataType = "String", paramType = "header")
     })
     @PostMapping(value = "/api/allocation-requests",
-            consumes = MediaType.TEXT_PLAIN_VALUE,
+            consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<AllocationRequestPayload> createAllocationRequest(@AuthenticationPrincipal AuthenticatedUser user,
-                                                                            @Valid
-                                                                            @Min(value = 1)
-                                                                            @Max(value = 100)
-                                                                            @RequestBody String address) {
-        log.info("createAllocationRequest address: {}, ", address);
+                                                                            @Valid @RequestBody CreateAllocationRequestReqBody reqBody) {
+        log.info("createAllocationRequest address: {}, ", reqBody);
         if (!user.isPassenger()) {
             throw new ForbiddenException("Only passenger can request allocation. user: " + user);
         }
-        AllocationRequest createdEntity = service.createAllocationRequest(user, address);
+        AllocationRequest createdEntity = service.createAllocationRequest(user, reqBody.getAddress());
         return ResponseEntity.created(URI.create("/api/allocation-requests/" + createdEntity.getId()))
                 .body(AllocationRequestPayload.from(createdEntity));
     }
@@ -91,18 +86,16 @@ public class AllocationRequestController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "X-AUTH-TOKEN", required = true, dataType = "String", paramType = "header")
     })
-    @PatchMapping(value = "/api/allocation-requests/{arId}",
+    @PatchMapping(value = "/api/allocation-requests/{arId}/take",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public AllocationRequestPayload takeRequest(@AuthenticationPrincipal AuthenticatedUser user,
-                                                @PathVariable("arId") Integer arId,
-                                                @Valid @RequestBody TakingAllocationRequestReqBody reqBody) {
-        log.info("takeRequest reqBody: {}, ", reqBody);
-        boolean isDriverIdMatch = reqBody.getDriverNo().equals(user.getId());
-        if (!user.isDriver() || !isDriverIdMatch) {
-            throw new ForbiddenException("Only authorized driver can take allocation request. user: " + user + ", match: " + isDriverIdMatch);
+                                                @PathVariable("arId") Integer arId) {
+        log.info("takeRequest user: {}, ", user);
+        if (!user.isDriver()) {
+            throw new ForbiddenException("Only authorized driver can take allocation request. user: " + user);
         }
-        return AllocationRequestPayload.from(service.takeRequest(arId, reqBody));
+        return AllocationRequestPayload.from(service.takeRequest(arId, user.getId()));
     }
 
 }
