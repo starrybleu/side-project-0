@@ -25,5 +25,5 @@
 
 ### mac || linux
 
-- `./gradlew.sh :clean :bootRun`
+- `./gradlew :clean :bootRun`
 - `http://localhost:8080/swagger-ui.html` 접속 후 API 실행 가능
